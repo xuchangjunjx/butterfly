@@ -54,7 +54,7 @@ class BaseCanvas extends Canvas {
       endpoint: {
         position: _.get(options, 'theme.endpoint.position'),
         linkableHighlight: _.get(options, 'theme.endpoint.linkableHighlight') || false,
-        limitNum: undefined,
+        limitNum: _.get(options, 'theme.endpoint.limitNum'),
         expandArea: {
           left: _.get(options, 'theme.endpoint.expandArea.left') || 10,
           right: _.get(options, 'theme.endpoint.expandArea.right') || 10,
@@ -209,10 +209,8 @@ class BaseCanvas extends Canvas {
       setTimeout(() => {
         // 生成nodes
         this.addNodes(nodes);
-        // console.log(JSON.stringify(this.nodes[0].children));
         resolve();
       }, 10);
-      // console.log(this.nodes);
     });
     let edgePromise = new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -933,7 +931,6 @@ class BaseCanvas extends Canvas {
         }
       });
     }
-
     return group;
   }
 
@@ -947,9 +944,13 @@ class BaseCanvas extends Canvas {
       }
     });
 
-    groupIds.forEach((item) => {
-      this.removeGroup(item, isNotEventEmit);
-    })
+    let rmGroups = groupIds.map((item) => {
+      return this.removeGroup(item, isNotEventEmit);
+    });
+
+    return {
+      groups: rmGroups
+    }
   }
 
   getNeighborEdges(id, type) {
@@ -1885,6 +1886,13 @@ class BaseCanvas extends Canvas {
     this.on('InnerEvents', (data) => {
       if (data.type === 'node:addEndpoint') {
         this._addEndpoint(data.data, 'node', data.isInited);
+      } else if (data.type === 'node:removeEndpoint') {
+        let _point = data.data;
+        let rmEdges = this.edges.filter((item) => {
+          return (item.sourceNode.id === _point.nodeId && item.sourceEndpoint.id === _point.id) ||
+                 (item.targetNode.id === _point.nodeId && item.targetEndpoint.id === _point.id);
+        });
+        this.removeEdges(rmEdges);
       } else if (data.type === 'group:addEndpoint') {
         this._addEndpoint(data.data, 'group', data.isInited);
       } else if (data.type === 'node:dragBegin') {
@@ -3161,6 +3169,93 @@ class BaseCanvas extends Canvas {
             }))
           }
         });
+      } else if(_.get(this.layout, 'type') === 'gridLayout') {
+        const _opts = $.extend({
+          // 布局画布总宽度
+          width: 150,
+          // 布局画布总长度
+          height: 100,
+          // 布局相对起始点
+          begin: [0, 0],
+          preventOverlap: true,
+          preventOverlapPadding: 10,
+          condense: false,
+          //宽高
+          rows: undefined,
+          cols: undefined,
+          //位置
+          position: undefined,
+          // 排序方式
+          sortBy: 'degree',
+          nodeSize: 30,
+          link: {
+            // 以node的什么字段为寻找id，跟d3原理一样
+            id: 'id',
+            // 线条的距离
+            distance: 100,
+            // 线条的粗细
+            strength: 1
+          }
+        }, _.get(this.layout, 'options'), true);
+        // 自动布局
+        if (_.get(this.layout, 'type') === 'gridLayout') {
+
+          Layout.gridLayout({
+            opts: _opts,
+            data: {
+              groups: data.groups,
+              nodes: data.nodes,
+              // 加工线条数据，兼容endpoint为id的属性，d3没这个概念
+              edges: data.edges.map(item => ({
+                source: item.type === 'endpoint' ? item.sourceNode : item.source,
+                target: item.type === 'endpoint' ? item.targetNode : item.target
+              }))
+            }
+          })
+        }
+      } else if(_.get(this.layout, 'type') === 'fruchterman') {
+        const _opts = $.extend({
+           // 布局画布总宽度
+           width,
+           // 布局画布总长度
+           height,
+            /** 停止迭代的最大迭代数 */
+          maxIteration: 1000,
+            /** 布局中心 */
+          center: [width / 2, height / 2],
+            /** 重力大小，影响图的紧凑程度 */
+          gravity: 5,
+          /** 速度 */
+          speed: 5,
+           /** 是否产生聚类力 */
+          clustering: false,
+           /** 聚类力大小 */
+          clusterGravity: 10,
+          link: {
+            // 以node的什么字段为寻找id，跟d3原理一样
+            id: 'id',
+            // 线条的距离
+            distance: 100,
+            // 线条的粗细
+            strength: 1
+          }
+        }, _.get(this.layout, 'options'), true);
+        // 自动布局
+        if (_.get(this.layout, 'type') === 'fruchterman') {
+
+          Layout.fruchterman({
+            opts: _opts,
+            data: {
+              groups: data.groups,
+              nodes: data.nodes,
+              // 加工线条数据，兼容endpoint为id的属性，d3没这个概念
+              edges: data.edges.map(item => ({
+                source: item.type === 'endpoint' ? item.sourceNode : item.source,
+                target: item.type === 'endpoint' ? item.targetNode : item.target
+              }))
+            }
+          })
+        }
       }
     }
   }

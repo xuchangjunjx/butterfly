@@ -2,12 +2,11 @@
 import React, {Component} from 'react';
 
 const Canvas = require('../../../index.js').Canvas;
-const mockData = require('./data');
-
+const {mockData} = require('./data');
 require('./index.less');
 require('butterfly-dag/dist/index.css');
 
-class ForceTree extends Component {
+class Grid extends Component {
   constructor() {
     super();
   }
@@ -21,7 +20,7 @@ class ForceTree extends Component {
       zoomable: true,    // 可放大
       moveable: true,    // 可平移
       layout: {
-        type: 'forceLayout',
+        type: 'gridLayout',
         options: {
           link: {
             // 线条的距离
@@ -29,6 +28,23 @@ class ForceTree extends Component {
             // 线条的粗细
             strength: 1
           },
+           // 布局画布总宽度
+          width: 150,
+          // 布局画布总长度
+          height: 100,
+          // 布局相对起始点
+          begin: [20, 20],
+          preventOverlap: true,
+          preventOverlapPadding: 10,
+          condense: false,
+          //宽高
+          rows: undefined,
+          cols: undefined,
+          //位置
+          position: undefined,
+          // 排序方式
+          sortBy: 'degree',
+          nodeSize: 30,
         },
       },
       theme: {
@@ -49,12 +65,12 @@ class ForceTree extends Component {
   }
   render() {
     return (
-      <div className='force-tree-page'>
-        <div className="force-tree-canvas" id="dag-canvas">
+      <div className='grid-tree-page'>
+        <div className="grid-tree-canvas" id="dag-canvas">
         </div>
       </div>
     );
   }
 }
 
-module.exports = ForceTree;
+module.exports = Grid;
