@@ -1,14 +1,12 @@
-'use strict';
+import Node from './node';
+import Edge from './edge';
 
-const Node = require('./node.js');
-const Edge = require('./edge');
-
-module.exports = {
+export default {
   nodes: [
     {
       id: '1',
       label: '某某算法',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-kaifa',
       top: 50,
       left: 200,
@@ -22,7 +20,7 @@ module.exports = {
     {
       id: '2',
       label: '某某算法',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-kaifa',
       top: 50,
       left: 350,
@@ -36,7 +34,7 @@ module.exports = {
     {
       id: '3',
       label: '某某算法',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-kaifa',
       top: 50,
       left: 500,
@@ -50,7 +48,7 @@ module.exports = {
     {
       id: '4',
       label: '某某算法',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-kaifa',
       top: 50,
       left: 650,
@@ -64,7 +62,7 @@ module.exports = {
     {
       id: '5',
       label: '时间处理',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-shijian',
       top: 50,
       left: 800,
@@ -78,7 +76,7 @@ module.exports = {
     {
       id: '6',
       label: '算数运算',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-webicon310',
       top: 50,
       left: 950,
@@ -92,7 +90,7 @@ module.exports = {
     {
       id: '7',
       label: '交运算',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-guanlian',
       top: 200,
       left: 350,
@@ -106,7 +104,7 @@ module.exports = {
     {
       id: '8',
       label: '字符串处理',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-shujuji',
       top: 200,
       left: 500,
@@ -120,7 +118,7 @@ module.exports = {
     {
       id: '9',
       label: '字符串处理',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-shujuji',
       top: 200,
       left: 650,
@@ -134,7 +132,7 @@ module.exports = {
     {
       id: '10',
       label: '交运算',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-guanlian',
       top: 200,
       left: 950,
@@ -152,7 +150,7 @@ module.exports = {
     {
       id: '11',
       label: '某某算法',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-kaifa',
       top: 55,
       left: 50,
@@ -167,7 +165,7 @@ module.exports = {
     {
       id: '12',
       label: '某某算法',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-kaifa',
       top: 55,
       left: 300,
@@ -182,7 +180,7 @@ module.exports = {
     {
       id: '13',
       label: '字符串处理',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-shujuji',
       top: 350,
       left: 800,
@@ -196,7 +194,7 @@ module.exports = {
     {
       id: '14',
       label: '字符串处理',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-shujuji',
       top: 350,
       left: 950,
@@ -210,7 +208,7 @@ module.exports = {
     {
       id: '15',
       label: '交运算',
-      className: 'deep-blue',
+      className: 'icon-background-color',
       iconType: 'icon-guanlian',
       top: 205,
       left: 300,
@@ -352,7 +350,7 @@ module.exports = {
     options: {
       title: '测试'
     },
-    draggable:false,
+    draggable: false,
     top: 310,
     left: 185,
     width: 500,
@@ -360,3 +358,4 @@ module.exports = {
     resize: true
   }],
 };
+

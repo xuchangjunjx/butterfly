@@ -1,15 +1,12 @@
-'use strict';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
+import {Canvas} from 'butterfly-dag';
+import mockData from './data';
 
-const Canvas = require('../../../index.js').Canvas;
-const {mockData} = require('./data');
-require('./index.less');
-require('butterfly-dag/dist/index.css');
+import 'butterfly-dag/dist/index.css';
+import './index.less';
 
 class Grid extends Component {
-  constructor() {
-    super();
-  }
   componentDidMount() {
     let root = document.getElementById('dag-canvas');
     this.canvas = new Canvas({
@@ -28,19 +25,20 @@ class Grid extends Component {
             // 线条的粗细
             strength: 1
           },
-           // 布局画布总宽度
+          // 布局画布总宽度
           width: 150,
           // 布局画布总长度
           height: 100,
           // 布局相对起始点
           begin: [20, 20],
+          center: [10,100],
           preventOverlap: true,
           preventOverlapPadding: 10,
           condense: false,
-          //宽高
+          // 宽高
           rows: undefined,
           cols: undefined,
-          //位置
+          // 位置
           position: undefined,
           // 排序方式
           sortBy: 'degree',
@@ -49,19 +47,11 @@ class Grid extends Component {
       },
       theme: {
         edge: {
-          type: 'Straight'
+          shapeType: 'Straight'
         }
       }
     });
-    // setTimeout(() => {
-    //   this.canvas.draw(mockData);
-    // }, 500);
-    // console.log(mockData);
     this.canvas.draw(mockData);
-
-    this.canvas.on('events', (data) => {
-      console.log(data);
-    });
   }
   render() {
     return (
@@ -73,4 +63,4 @@ class Grid extends Component {
   }
 }
 
-module.exports = Grid;
+ReactDOM.render(<Grid />, document.getElementById('root'));

@@ -1,7 +1,5 @@
-'use strict';
-
-const Edge = require('../../../index.js').Edge;
-const $ = require('jquery');
+import $ from 'jquery';
+import {Edge} from 'butterfly-dag';
 
 class BaseEdge extends Edge {
   draw(obj) {
@@ -11,6 +9,7 @@ class BaseEdge extends Edge {
     }
     return path;
   }
+
   drawArrow(isShow) {
     let dom = super.drawArrow(isShow);
     if (this.options.color) {
@@ -18,12 +17,14 @@ class BaseEdge extends Edge {
     }
     return dom;
   }
+
   drawLabel(text) {
     let dom = null;
-    if (!!text) {
-      dom = $(`<i class="iconfont icon-jiandao label ${text}"></i>`)[0];
+    if (text) {
+      dom = $(`<i class="newIconfont iconjiandao-tianchong label ${text}"></i>`)[0];
     }
     return dom;
   }
-};
-module.exports = BaseEdge;
+}
+
+export default BaseEdge;

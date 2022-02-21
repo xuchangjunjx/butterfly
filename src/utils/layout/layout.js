@@ -11,7 +11,10 @@ import fruchterman from './fruchterman.js';
 import gridLayout from './gridLayout.js'
 import forceLayout from './forceLayout.js'
 import concentLayout from './concentLayout.js'
-import drageLayout from './drageLayout.js'
+import dagreLayout from './dagreLayout.js';
+import radial from './radial/radial.js';
+import DagreGroupLayout from './dagreGroupLayout.js';
+import treeLayout from './hierarchy';
 
 
 // 离散树形布局
@@ -41,22 +44,16 @@ function forceTreeLayout(param) {
   // 后续需要考虑group的布局
 }
 
-// 后续拓展树形布局
-function treeLayout(param) {
-
-}
-
-
-
-
 
 export default {
   forceLayout,
   forceTreeLayout,
   treeLayout,
-  drageLayout,
+  dagreLayout,
   concentLayout,
   gridLayout,
   fruchterman,
-  circleLayout: Layout.circleLayout
+  circleLayout: Layout.circleLayout,
+  radial,
+  dagreGroupLayout: DagreGroupLayout.dagreGroupLayout
 }
